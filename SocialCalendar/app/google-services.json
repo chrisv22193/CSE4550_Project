@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "242284079707",
+    "project_id": "social-calendar-auth",
+    "storage_bucket": "social-calendar-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242284079707:android:4ed40976759fd04e65ad7e",
+        "android_client_info": {
+          "package_name": "com.example.socialcalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242284079707-d93klk1ps6h6vuo2h4v3p9iq5qrcm95m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJMQgLg04VJ74KiLFJRLj7_45GZ_HECgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242284079707-d93klk1ps6h6vuo2h4v3p9iq5qrcm95m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
