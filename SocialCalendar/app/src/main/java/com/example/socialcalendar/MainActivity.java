@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -12,9 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference UsersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +41,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        NavController navController = Navigation.findNavController(this, R.id.fragment);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
-
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item)
-            {
-                UserMenuSelector(item);
-                return false;
-            }
-        });
     }
-
-
 
     @Override
     protected void onStart() {
@@ -64,6 +59,35 @@ public class MainActivity extends AppCompatActivity {
         {
             SendUserToLoginActivity();
         }
+
+        else{
+            CheckUserExistence();
+        }
+    }
+
+    private void CheckUserExistence() {
+        final String current_user_id = mAuth.getCurrentUser().getUid();
+
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(current_user_id)){
+                    SendUserToSetupActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void SendUserToSetupActivity() {
+        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(setupIntent);
+        finish();
     }
 
     private void SendUserToLoginActivity() {
@@ -86,19 +110,19 @@ public class MainActivity extends AppCompatActivity {
     {
         switch (item.getItemId())
         {
-            case R.id.nav_profile:
+            case R.id.nav_home:
                 Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.nav_home:
+            case R.id.nav_profile:
                 Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.nav_friends:
+            case R.id.nav_post:
                 Toast.makeText(this, "Friend list", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.nav_find_friends:
+            case R.id.nav_friends:
                 Toast.makeText(this, "Find friends", Toast.LENGTH_SHORT).show();
                 break;
 

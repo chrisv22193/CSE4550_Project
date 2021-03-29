@@ -17,7 +17,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/input"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -25,7 +25,9 @@
         app:layout_constraintBottom_toTopOf="@+id/register_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints=""
+        android:paddingStart="15dp" />
 
     <EditText
         android:id="@+id/register_password"
@@ -34,7 +36,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/input"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -42,7 +44,9 @@
         app:layout_constraintBottom_toTopOf="@+id/register_confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints=""
+        android:paddingStart="15dp" />
 
     <EditText
         android:id="@+id/register_confirm_password"
@@ -53,7 +57,7 @@
         android:layout_marginBottom="76dp"
         android:background="@drawable/input"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:hint="@string/confirm_password"
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -61,7 +65,9 @@
         app:layout_constraintBottom_toTopOf="@+id/register_create_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints=""
+        android:paddingStart="15dp" />
 
     <Button
         android:id="@+id/register_create_account"
@@ -71,7 +77,7 @@
         android:layout_centerVertical="true"
         android:layout_marginBottom="285dp"
         android:background="@drawable/button"
-        android:text="Create Account"
+        android:text="@string/create_account"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="16sp"
@@ -86,9 +92,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Already have an account? Sign In."
+        android:text="@string/already_have_an_account_sign_in"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
-        android:text="Create Account"
+        android:text="@string/create_account"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
         android:textSize="30sp"

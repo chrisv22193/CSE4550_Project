@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        NeedNewAccountLink = (TextView) findViewById(R.id.register_account_link);
+        NeedNewAccountLink = (TextView) findViewById(R.id.new_account_link);
         UserEmail = (EditText) findViewById(R.id.login_email);
         UserPassword = (EditText) findViewById(R.id.login_password);
         LoginButton = (Button) findViewById(R.id.login_button);
@@ -62,6 +62,18 @@ public class LoginActivity extends AppCompatActivity {
                 AllowUserToLogin();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null)
+        {
+            SendUserToMainActivity();
+        }
     }
 
     private void AllowUserToLogin() {
@@ -108,5 +120,6 @@ public class LoginActivity extends AppCompatActivity {
     private void SendUserToRegisterActivity() {
         Intent registerIntent = new Intent(LoginActivity.this, Register_Activity.class);
         startActivity(registerIntent);
+        finish();
     }
 }

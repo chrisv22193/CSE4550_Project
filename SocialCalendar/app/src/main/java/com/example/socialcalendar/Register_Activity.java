@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
@@ -59,6 +60,18 @@ public class Register_Activity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null)
+        {
+            SendUserToMainActivity();
+        }
+    }
+
     private void CreateNewAccount() {
         String email = UserEmail.getText().toString();
         String password = UserPassword.getText().toString();
@@ -91,7 +104,7 @@ public class Register_Activity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
-//                                SendUserToSetUpActivity();
+                                SendUserToSetUpActivity();
                                 Toast.makeText(Register_Activity.this, "You are authenticated successfully", Toast.LENGTH_SHORT).show();
                             }
                             else{
@@ -114,5 +127,12 @@ public class Register_Activity extends AppCompatActivity {
     private void SendUserToLoginActivity() {
         Intent loginIntent = new Intent(Register_Activity.this, LoginActivity.class);
         startActivity(loginIntent);
+    }
+
+    private void SendUserToMainActivity() {
+        Intent mainIntent = new Intent(Register_Activity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
     }
 }

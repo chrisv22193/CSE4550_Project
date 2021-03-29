@@ -17,7 +17,7 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/input"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
         android:textColor="#FFFFFF"
@@ -25,7 +25,9 @@
         app:layout_constraintBottom_toTopOf="@+id/login_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no"
+        android:paddingStart="15dp" />
 
     <EditText
         android:id="@+id/login_password"
@@ -37,7 +39,7 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/input"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
         android:textColor="#FFFFFF"
@@ -45,34 +47,36 @@
         app:layout_constraintBottom_toTopOf="@+id/forgot_password_link"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no"
+        android:paddingStart="15dp" />
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginBottom="270dp"
         android:background="@drawable/button"
-        android:text="Log In"
+        android:text="@string/log_in"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/register_account_link"
+        app:layout_constraintBottom_toTopOf="@+id/new_account_link"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/register_account_link"
+        android:id="@+id/new_account_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="Don't have an Account? Sign Up."
+        android:text="@string/don_t_have_an_account_sign_up"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,16 +95,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.437"
-        app:srcCompat="@drawable/image01" />
+        app:srcCompat="@drawable/image01"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/forgot_password_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="72dp"
-        android:text="Forgot Password?"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="35dp"
+        android:text="@string/forgot_password"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
