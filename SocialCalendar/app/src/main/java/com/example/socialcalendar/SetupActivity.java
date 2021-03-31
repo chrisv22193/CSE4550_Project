@@ -152,6 +152,7 @@ public class SetupActivity extends AppCompatActivity {
         String fullname = FullName.getText().toString();
         String phonenumber = PhoneNumber.getText().toString();
 
+
         if(TextUtils.isEmpty(username)){
             Toast.makeText(this,"Please provide your username", Toast.LENGTH_SHORT).show();
         }
@@ -166,8 +167,8 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("username", username);
             userMap.put("fullname", fullname);
             userMap.put("phonenumber", phonenumber);
-            userMap.put("status", "none");
-            userMap.put("dob", "none");
+            userMap.put("status", "");
+            userMap.put("dob", "");
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {

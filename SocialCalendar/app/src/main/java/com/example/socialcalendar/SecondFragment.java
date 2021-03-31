@@ -1,12 +1,27 @@
 package com.example.socialcalendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +61,15 @@ public class SecondFragment extends Fragment {
         return fragment;
     }
 
+    private TextView userName, userProfName, userBio, editProfileLink;
+    private ImageView userProfileBackgroundImage;
+    private CircleImageView userProfileImage;
+
+    private DatabaseReference profileUserRef;
+    private FirebaseAuth mAuth;
+
+    private String currentUserID;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +83,50 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        View v = inflater.inflate(R.layout.fragment_second, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        profileUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+
+        userName = (TextView) v.findViewById(R.id.my_username);
+        userProfName = (TextView) v.findViewById(R.id.my_profile_full_name);
+        userBio = (TextView) v.findViewById(R.id.my_profile_bio);
+        userProfileImage = (CircleImageView) v.findViewById(R.id.my_profile_pic);
+        userProfileBackgroundImage = (ImageView) v.findViewById(R.id.my_profile_background);
+        editProfileLink = (TextView) v.findViewById(R.id.edit_profile_link);
+
+        editProfileLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ProfileSettingsActivity.class));
+            }
+        });
+
+        profileUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String myProfileImage = dataSnapshot.child("profileimage").getValue().toString();
+                    String myProfileBackgroundImage = dataSnapshot.child("profilebackgroundimage").getValue().toString();
+                    String myUserName = dataSnapshot.child("username").getValue().toString();
+                    String myProfileName = dataSnapshot.child("fullname").getValue().toString();
+                    String myProfileStatus = dataSnapshot.child("status").getValue().toString();
+
+                    Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfileImage);
+                    Picasso.get().load(myProfileBackgroundImage).placeholder(R.drawable.background).into(userProfileBackgroundImage);
+                    userName.setText("@" + myUserName);
+                    userProfName.setText(myProfileName);
+                    userBio.setText(myProfileStatus);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return v;
     }
 }

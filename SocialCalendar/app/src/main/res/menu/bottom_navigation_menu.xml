@@ -7,16 +7,16 @@
         android:title="Home" />
     <item
         android:id="@+id/secondFragment"
-        android:icon="@drawable/ic_people"
-        android:title="Friends" />
+        android:icon="@drawable/ic_person"
+        android:title="Profile" />
     <item
         android:id="@+id/thirdFragment"
         android:icon="@drawable/ic_post_add"
         android:title="Post" />
     <item
         android:id="@+id/fourthFragment"
-        android:icon="@drawable/ic_person"
-        android:title="Profile" />
+        android:icon="@drawable/ic_people"
+        android:title="Friends" />
     <item
         android:id="@+id/fifthFragment"
         android:icon="@drawable/ic_settings"

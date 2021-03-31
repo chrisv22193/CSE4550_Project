@@ -8,181 +8,19 @@
     android:layout_height="match_parent"
     tools:context=".FifthFragment" >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/log_out_link"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:text="Log out"
+        android:textColor="#0288D1"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.861" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/settings_profile_background"
-                android:layout_width="wrap_content"
-                android:layout_height="130dp"
-                android:scaleType="centerCrop"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/background" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/settings_profile_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="300dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/profile" />
-
-            <TextView
-                android:id="@+id/statusLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="60dp"
-                android:layout_below="@+id/settings_profile_image"
-                android:text="Bio"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/settings_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_profile_background"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input"
-                android:hint="Bio"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
-
-            <TextView
-                android:id="@+id/usernameLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_below="@+id/settings_status"
-                android:text="Username"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/settings_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_status"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input"
-                android:hint="Username"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
-
-            <TextView
-                android:id="@+id/nameLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_below="@+id/settings_username"
-                android:text="Name"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/settings_full_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_username"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input"
-                android:hint="Name"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
-
-            <TextView
-                android:id="@+id/phoneNumberLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_below="@+id/settings_full_name"
-                android:text="Phone Number"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/settings_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_full_name"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input"
-                android:hint="Phone Number"
-                android:inputType="phone"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
-
-            <TextView
-                android:id="@+id/birthdayLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_below="@+id/settings_phone_number"
-                android:text="Birthday"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/settings_users_dob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_phone_number"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input"
-                android:hint="Birthday"
-                android:inputType="date"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
-
-            <Button
-                android:id="@+id/update_account_settings_button"
-                android:layout_width="400dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_below="@+id/settings_users_dob"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button"
-                android:text="Save Changes"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:id="@+id/log_out_link"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginLeft="160dp"
-                android:layout_below="@+id/update_account_settings_button"
-                android:text="Log out"
-                android:textSize="18sp"
-                android:textColor="#0288D1" />
-
-        </RelativeLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
