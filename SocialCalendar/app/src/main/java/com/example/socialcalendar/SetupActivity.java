@@ -45,6 +45,7 @@ public class SetupActivity extends AppCompatActivity {
 
     String currentUserID;
     final static int Gallery_Pick = 1;
+    private Uri ImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class SetupActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null){
-            Uri ImageUri = data.getData();
+            ImageUri = data.getData();
 
             CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
@@ -153,6 +154,9 @@ public class SetupActivity extends AppCompatActivity {
         String phonenumber = PhoneNumber.getText().toString();
 
 
+        if(ImageUri == null){
+            Toast.makeText(this,"Please select a profile image", Toast.LENGTH_SHORT).show();
+        }
         if(TextUtils.isEmpty(username)){
             Toast.makeText(this,"Please provide your username", Toast.LENGTH_SHORT).show();
         }

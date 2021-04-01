@@ -50,6 +50,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
     private String currentUserID;
     final static int Gallery_Pick = 1;
+    private Uri ImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,14 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                 galleryBackgroundIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryBackgroundIntent.setType("image/*");
                 startActivityForResult(galleryBackgroundIntent, Gallery_Pick);
+            }
+        });
+
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(ProfileSettingsActivity.this, LoginActivity.class));
             }
         });
 
@@ -133,7 +142,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null){
-            Uri ImageUri = data.getData();
+            ImageUri = data.getData();
             Uri BackgroundUri = data.getData();
 
             CropImage.activity()

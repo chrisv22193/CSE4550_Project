@@ -171,6 +171,17 @@
                 android:text="Save Changes"
                 android:textColor="@color/white"/>
 
+            <TextView
+                android:id="@+id/log_out_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/update_account_settings_button"
+                android:layout_marginTop="50dp"
+                android:text="Log out"
+                android:textColor="#0288D1"
+                android:textSize="18sp"
+                android:textAlignment="center" />
+
         </RelativeLayout>
     </ScrollView>
 
