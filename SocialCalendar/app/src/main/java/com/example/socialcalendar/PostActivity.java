@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +33,7 @@ import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
-    private ImageButton SelectPostImage;
+    private ImageView SelectPostImage;
     private Button PostButton;
     private EditText PostDescription;
 
@@ -57,7 +58,7 @@ public class PostActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Post");
 
-        SelectPostImage = (ImageButton) findViewById(R.id.select_post_image);
+        SelectPostImage = (ImageView) findViewById(R.id.select_post_image);
         PostButton = (Button) findViewById(R.id.post_button);
         PostDescription = (EditText) findViewById(R.id.post_description);
 
@@ -93,11 +94,11 @@ public class PostActivity extends AppCompatActivity {
 
     private void StoringImageToFirebaseStorage() {
         Calendar calForDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM-dd-yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd, yyyy");
         saveCurrentDate = currentDate.format(calForDate.getTime());
 
         Calendar calForTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
         saveCurrentTime = currentTime.format(calForTime.getTime());
 
         postRandomName = saveCurrentDate + saveCurrentTime;
@@ -127,7 +128,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String userFullName = dataSnapshot.child("fullname").getValue().toString();
+                    String username = dataSnapshot.child("username").getValue().toString();
                     String userProfileImage = dataSnapshot.child("profileimage").getValue().toString();
 
                     HashMap postMap = new HashMap();
@@ -137,7 +138,7 @@ public class PostActivity extends AppCompatActivity {
                         postMap.put("description", Description);
                         postMap.put("postimage", downloadUrl);
                         postMap.put("profileimage", userProfileImage);
-                        postMap.put("fullname", userFullName);
+                        postMap.put("username", username);
                     PostRef.child(currentUserID + postRandomName).updateChildren(postMap).addOnCompleteListener(new OnCompleteListener() {
                          @Override
                          public void onComplete(@NonNull Task task) {

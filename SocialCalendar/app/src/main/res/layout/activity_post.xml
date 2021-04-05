@@ -7,7 +7,7 @@
     android:background="@color/black"
     tools:context=".PostActivity">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/select_post_image"
         android:layout_width="300dp"
         android:layout_height="200dp"
@@ -15,6 +15,7 @@
         android:scaleType="fitCenter"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        android:background="@color/white"
         app:srcCompat="@drawable/select_image"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="112dp" />

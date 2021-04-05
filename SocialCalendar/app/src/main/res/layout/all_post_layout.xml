@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp">
@@ -57,7 +57,7 @@
                         android:id="@+id/text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Has been updated "
+                        android:text="Uploaded on "
                         android:textColor="@color/grey_1000"
                         android:textSize="13sp"
                         android:textStyle="bold"/>
@@ -65,8 +65,15 @@
                         android:id="@+id/post_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text=" Date"
                         android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/text_in_between_date_and_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" at "
+                        android:textColor="@color/grey_1000"
                         android:textSize="13sp"/>
                     <TextView
                         android:id="@+id/post_time"
@@ -93,13 +100,18 @@
             android:padding="3dp"
             android:textSize="14sp"
             android:textColor="@color/white"/>
+
         <ImageView
             android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_margin="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/background" />
 
     </LinearLayout>
 

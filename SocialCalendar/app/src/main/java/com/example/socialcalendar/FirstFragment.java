@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,8 +63,6 @@ public class FirstFragment extends Fragment {
         return fragment;
     }
 
-    private ImageButton addNewPostButton;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +74,7 @@ public class FirstFragment extends Fragment {
     private RecyclerView postList;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef, PostRef;
+    private ImageButton addNewPostButton;
 
     String currentUserID;
 
@@ -92,11 +92,7 @@ public class FirstFragment extends Fragment {
         addNewPostButton = (ImageButton) v.findViewById(R.id.add_new_post_button);
 
         postList = (RecyclerView) v.findViewById(R.id.all_users_post_list);
-        postList.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        postList.setLayoutManager(linearLayoutManager);
+        postList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         addNewPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,19 +109,18 @@ public class FirstFragment extends Fragment {
         super.onStart();
 
         FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
-                .setQuery(UsersRef, Posts.class)
+                .setQuery(PostRef, Posts.class)
                 .build();
 
         FirebaseRecyclerAdapter<Posts, PostsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull Posts model) {
-                holder.username.setText(model.getFullname());
+                holder.username.setText(model.getUsername());
                 holder.date.setText(model.getDate());
                 holder.time.setText(model.getTime());
                 holder.description.setText(model.getDescription());
                 Picasso.get().load(model.getProfileimage()).into(holder.profileimage);
-                Picasso.get().load(model.getPostimage()).into(holder.postimage);
-
+                Picasso.get().load(model.getPostimage()).placeholder(R.drawable.background).into(holder.postimage);
             }
 
             @NonNull
@@ -136,13 +131,13 @@ public class FirstFragment extends Fragment {
                 return viewHolder;
             }
         };
-        postList.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
+        postList.setAdapter(firebaseRecyclerAdapter);
     }
 
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder{
-        TextView username, date, fullname, time, description;
+        TextView username, date, time, description;
         CircleImageView profileimage;
         ImageView postimage;
 
@@ -154,7 +149,7 @@ public class FirstFragment extends Fragment {
             time = itemView.findViewById(R.id.post_time);
             description = itemView.findViewById(R.id.post_description);
             profileimage = itemView.findViewById(R.id.post_profile_image);
-            postimage= itemView.findViewById(R.id.post_image);
+            postimage = itemView.findViewById(R.id.post_image);
 
         }
     }

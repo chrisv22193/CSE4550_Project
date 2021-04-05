@@ -1,20 +1,20 @@
 package com.example.socialcalendar;
 
 public class Posts {
-    public String uid, time, date, postimage, profileimage, description, fullname;
+    public String uid, time, date, postimage, profileimage, description, username;
 
     public Posts(){
 
     }
 
-    public Posts(String uid, String time, String date, String postimage, String profileimage, String description, String fullname) {
+    public Posts(String uid, String time, String date, String postimage, String profileimage, String description, String username) {
         this.uid = uid;
         this.time = time;
         this.date = date;
         this.postimage = postimage;
         this.profileimage = profileimage;
         this.description = description;
-        this.fullname = fullname;
+        this.username = username;
     }
 
     public String getUid() {
@@ -65,11 +65,11 @@ public class Posts {
         this.description = description;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

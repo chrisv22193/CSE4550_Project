@@ -50,6 +50,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
     private String currentUserID;
     final static int Gallery_Pick = 1;
+    final static int Gallery_Pick_2 = 1;
     private Uri ImageUri;
 
     @Override
@@ -89,7 +90,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                 Intent galleryBackgroundIntent = new Intent();
                 galleryBackgroundIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryBackgroundIntent.setType("image/*");
-                startActivityForResult(galleryBackgroundIntent, Gallery_Pick);
+                startActivityForResult(galleryBackgroundIntent, Gallery_Pick_2);
             }
         });
 
@@ -141,27 +142,23 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null){
             ImageUri = data.getData();
-            Uri BackgroundUri = data.getData();
 
-            CropImage.activity()
+            CropImage.activity(ImageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(this);
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
             CropImage.ActivityResult Imageresult = CropImage.getActivityResult(data);
-            CropImage.ActivityResult Backgroundresult = CropImage.getActivityResult(data);
 
 
             if (resultCode == RESULT_OK){
-                Uri resultUriBackground = Imageresult.getUri();
-                Uri resultUriImage = Backgroundresult.getUri();
+                Uri resultUriImage = Imageresult.getUri();
 
-                final StorageReference filePathBackground = UserProfileBackgroundImageRef.child(currentUserID + ".jpg");
                 final StorageReference filepathImage = UserProfileImageRef.child(currentUserID + ".jpg");
-
                 filepathImage.putFile(resultUriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -185,6 +182,28 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                         });
                     }
                 });
+            }
+            else{
+                Toast.makeText(ProfileSettingsActivity.this, "Error occurred: Image could not be cropped. Try again", Toast.LENGTH_SHORT);
+            }
+        }
+
+        if (requestCode == Gallery_Pick_2 && requestCode == RESULT_OK && data != null){
+            Uri BackgroundUri = data.getData();
+
+            CropImage.activity(BackgroundUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult Backgroundresult = CropImage.getActivityResult(data);
+
+
+            if (resultCode == RESULT_OK){
+                Uri resultUriBackground = Backgroundresult.getUri();
+
+                final StorageReference filePathBackground = UserProfileBackgroundImageRef.child(currentUserID + ".jpg");
 
                 filePathBackground.putFile(resultUriBackground).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
