@@ -74,7 +74,7 @@ public class FirstFragment extends Fragment {
     private RecyclerView postList;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef, PostRef;
-    private ImageButton addNewPostButton;
+    private ImageView addNewPostButton;
 
     String currentUserID;
 
@@ -89,17 +89,17 @@ public class FirstFragment extends Fragment {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         PostRef = FirebaseDatabase.getInstance().getReference().child("Post");
 
-        addNewPostButton = (ImageButton) v.findViewById(R.id.add_new_post_button);
+//        addNewPostButton = (ImageView) v.findViewById(R.id.add_new_post_button);
 
         postList = (RecyclerView) v.findViewById(R.id.all_users_post_list);
         postList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        addNewPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SendUserToPostActivity();
-            }
-        });
+//        addNewPostButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SendUserToPostActivity();
+//            }
+//        });
 
         return v;
     }

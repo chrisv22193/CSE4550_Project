@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,7 +62,8 @@ public class SecondFragment extends Fragment {
         return fragment;
     }
 
-    private TextView userName, userProfName, userBio, editProfileLink;
+    private TextView userName, userProfName, userBio;
+    private Button editProfileButton;
     private ImageView userProfileBackgroundImage;
     private CircleImageView userProfileImage;
 
@@ -93,10 +95,10 @@ public class SecondFragment extends Fragment {
         userProfName = (TextView) v.findViewById(R.id.my_profile_full_name);
         userBio = (TextView) v.findViewById(R.id.my_profile_bio);
         userProfileImage = (CircleImageView) v.findViewById(R.id.my_profile_pic);
-        userProfileBackgroundImage = (ImageView) v.findViewById(R.id.my_profile_background);
-        editProfileLink = (TextView) v.findViewById(R.id.edit_profile_link);
+//        userProfileBackgroundImage = (ImageView) v.findViewById(R.id.my_profile_background);
+        editProfileButton = (Button) v.findViewById(R.id.edit_profile_button);
 
-        editProfileLink.setOnClickListener(new View.OnClickListener() {
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ProfileSettingsActivity.class));
@@ -108,13 +110,13 @@ public class SecondFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     String myProfileImage = dataSnapshot.child("profileimage").getValue().toString();
-                    String myProfileBackgroundImage = dataSnapshot.child("profilebackgroundimage").getValue().toString();
+//                    String myProfileBackgroundImage = dataSnapshot.child("profilebackgroundimage").getValue().toString();
                     String myUserName = dataSnapshot.child("username").getValue().toString();
                     String myProfileName = dataSnapshot.child("fullname").getValue().toString();
                     String myProfileStatus = dataSnapshot.child("status").getValue().toString();
 
                     Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfileImage);
-                    Picasso.get().load(myProfileBackgroundImage).placeholder(R.drawable.background).into(userProfileBackgroundImage);
+//                    Picasso.get().load(myProfileBackgroundImage).placeholder(R.drawable.background).into(userProfileBackgroundImage);
                     userName.setText("@" + myUserName);
                     userProfName.setText(myProfileName);
                     userBio.setText(myProfileStatus);

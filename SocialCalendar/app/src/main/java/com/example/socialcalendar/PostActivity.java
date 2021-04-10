@@ -34,7 +34,7 @@ import java.util.HashMap;
 public class PostActivity extends AppCompatActivity {
 
     private ImageView SelectPostImage;
-    private Button PostButton;
+    private Button PostButton, ClosePostButton;
     private EditText PostDescription;
 
     private FirebaseAuth mAuth;
@@ -60,12 +60,20 @@ public class PostActivity extends AppCompatActivity {
 
         SelectPostImage = (ImageView) findViewById(R.id.select_post_image);
         PostButton = (Button) findViewById(R.id.post_button);
+        ClosePostButton = (Button) findViewById(R.id.back_to_first_fragment);
         PostDescription = (EditText) findViewById(R.id.post_description);
 
         SelectPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenGallery();
+            }
+        });
+
+        ClosePostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendUserToMainActivity();
             }
         });
 

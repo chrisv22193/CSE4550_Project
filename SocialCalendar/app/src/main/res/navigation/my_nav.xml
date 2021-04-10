@@ -29,4 +29,9 @@
         android:name="com.example.socialcalendar.FifthFragment"
         android:label="fragment_fifth"
         tools:layout="@layout/fragment_fifth" />
+    <activity
+        android:id="@+id/postActivity"
+        android:name="com.example.socialcalendar.PostActivity"
+        android:label="activity_post"
+        tools:layout="@layout/activity_post" />
 </navigation>
