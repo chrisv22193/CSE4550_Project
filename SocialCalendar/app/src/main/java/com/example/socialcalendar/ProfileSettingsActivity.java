@@ -37,11 +37,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileSettingsActivity extends AppCompatActivity {
 
-    private EditText userName, userProfName, userStatus, userPhoneNumber, userDOB;
+    private EditText userName, userProfName, userStatus;
     private Button saveChangesSettingsButton;
     private CircleImageView userProfImage;
     private ImageView userBackgroundImage;
-    private TextView Logout;
 
     private FirebaseAuth mAuth;
     private DatabaseReference settingsUserRef;
@@ -67,12 +66,9 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.settings_username);
         userProfName = (EditText) findViewById(R.id.settings_full_name);
         userStatus = (EditText) findViewById(R.id.settings_status);
-        userPhoneNumber = (EditText) findViewById(R.id.settings_phone_number);
-        userDOB = (EditText) findViewById(R.id.settings_users_dob);
         userProfImage = (CircleImageView) findViewById(R.id.settings_profile_image);
 //        userBackgroundImage = (ImageView) findViewById(R.id.settings_profile_background);
         saveChangesSettingsButton = (Button) findViewById(R.id.update_account_settings_button);
-        Logout = findViewById(R.id.log_out_link);
 
         userProfImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,14 +90,6 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(ProfileSettingsActivity.this, LoginActivity.class));
-            }
-        });
-
         settingsUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,16 +99,12 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                     String myUserName = dataSnapshot.child("username").getValue().toString();
                     String myProfileName = dataSnapshot.child("fullname").getValue().toString();
                     String myProfileStatus = dataSnapshot.child("status").getValue().toString();
-                    String myUserPhoneNumber = dataSnapshot.child("phonenumber").getValue().toString();
-                    String myUserDOB = dataSnapshot.child("dob").getValue().toString();
 
                     Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfImage);
 //                    Picasso.get().load(myProfileBackground).placeholder(R.drawable.background).into(userBackgroundImage);
                     userName.setText(myUserName);
                     userProfName.setText(myProfileName);
                     userStatus.setText(myProfileStatus);
-                    userPhoneNumber.setText(myUserPhoneNumber);
-                    userDOB.setText(myUserDOB);
                 }
             }
 
@@ -239,8 +223,6 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         String username = userName.getText().toString();
         String profilename = userProfName.getText().toString();
         String status = userStatus.getText().toString();
-        String phonenumber = userPhoneNumber.getText().toString();
-        String birthdate = userDOB.getText().toString();
 
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(ProfileSettingsActivity.this, "Please write your username", Toast.LENGTH_SHORT).show();
@@ -251,24 +233,16 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(status)){
             Toast.makeText(ProfileSettingsActivity.this, "Please write your status", Toast.LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(phonenumber)){
-            Toast.makeText(ProfileSettingsActivity.this, "Please write your phone number", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(birthdate)){
-            Toast.makeText(ProfileSettingsActivity.this, "Please write your birthdate", Toast.LENGTH_SHORT).show();
-        }
         else{
-            UpdateAccountInfo(username, profilename, status, birthdate, phonenumber);
+            UpdateAccountInfo(username, profilename, status);
         }
 
     }
 
-    private void UpdateAccountInfo(String username, String profilename, String status, String birthdate, String phonenumber) {
+    private void UpdateAccountInfo(String username, String profilename, String status) {
         HashMap userMap = new HashMap();
         userMap.put("username", username);
         userMap.put("fullname", profilename);
-        userMap.put("phonenumber", phonenumber);
-        userMap.put("dob", birthdate);
         userMap.put("status", status);
         settingsUserRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
             @Override

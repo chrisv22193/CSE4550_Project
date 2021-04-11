@@ -81,6 +81,7 @@ public class FifthFragment extends Fragment {
     }
 
     private TextView Logout;
+    private Button PersonalInfoButton;
 
     private FirebaseAuth mAuth;
 
@@ -101,7 +102,15 @@ public class FifthFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
 
+        PersonalInfoButton = (Button) v.findViewById(R.id.personal_info_button);
         Logout = v.findViewById(R.id.log_out_link);
+
+        PersonalInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PersonalInfoActivity.class));
+            }
+        });
 
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
