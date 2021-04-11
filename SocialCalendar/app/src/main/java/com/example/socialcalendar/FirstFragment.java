@@ -1,5 +1,6 @@
 package com.example.socialcalendar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -92,7 +92,11 @@ public class FirstFragment extends Fragment {
 //        addNewPostButton = (ImageView) v.findViewById(R.id.add_new_post_button);
 
         postList = (RecyclerView) v.findViewById(R.id.all_users_post_list);
-        postList.setLayoutManager(new LinearLayoutManager(getContext()));
+        postList.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postList.setLayoutManager(linearLayoutManager);
 
 //        addNewPostButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -101,57 +105,73 @@ public class FirstFragment extends Fragment {
 //            }
 //        });
 
+        DisplayAllUsersPost();
+
         return v;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerOptions<Posts> options = new FirebaseRecyclerOptions.Builder<Posts>()
-                .setQuery(PostRef, Posts.class)
-                .build();
-
-        FirebaseRecyclerAdapter<Posts, PostsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull PostsViewHolder holder, int position, @NonNull Posts model) {
-                holder.username.setText(model.getUsername());
-                holder.date.setText(model.getDate());
-                holder.time.setText(model.getTime());
-                holder.description.setText(model.getDescription());
-                Picasso.get().load(model.getProfileimage()).into(holder.profileimage);
-                Picasso.get().load(model.getPostimage()).placeholder(R.drawable.background).into(holder.postimage);
-            }
-
-            @NonNull
-            @Override
-            public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.all_post_layout,  viewGroup, false);
-                PostsViewHolder viewHolder = new PostsViewHolder(view);
-                return viewHolder;
-            }
-        };
+    private void DisplayAllUsersPost() {
+        FirebaseRecyclerAdapter<Posts, PostViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Posts, PostViewHolder>
+                        (
+                                Posts.class,
+                                R.layout.all_post_layout,
+                                PostViewHolder.class,
+                                PostRef
+                        ) {
+                    @Override
+                    protected void populateViewHolder(PostViewHolder postViewHolder, Posts posts, int i) {
+                        postViewHolder.setUsername(posts.getUsername());
+                        postViewHolder.setTime(posts.getTime());
+                        postViewHolder.setDate(posts.getDate());
+                        postViewHolder.setDescription(posts.getDescription());
+                        postViewHolder.setProfileimage(posts.getProfileimage());
+                        postViewHolder.setPostimage(posts.getPostimage());
+                    }
+                };
         firebaseRecyclerAdapter.startListening();
         postList.setAdapter(firebaseRecyclerAdapter);
     }
 
 
-    public static class PostsViewHolder extends RecyclerView.ViewHolder{
-        TextView username, date, time, description;
-        CircleImageView profileimage;
-        ImageView postimage;
-
-        public PostsViewHolder(@NonNull View itemView) {
+    public static class PostViewHolder extends RecyclerView.ViewHolder{
+        View mView;
+        public PostViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            username = itemView.findViewById(R.id.post_user_name);
-            date = itemView.findViewById(R.id.post_date);
-            time = itemView.findViewById(R.id.post_time);
-            description = itemView.findViewById(R.id.post_description);
-            profileimage = itemView.findViewById(R.id.post_profile_image);
-            postimage = itemView.findViewById(R.id.post_image);
-
+            mView = itemView;
         }
+
+        public void setUsername(String username){
+            TextView Username = (TextView) mView.findViewById(R.id.post_user_name);
+            Username.setText(username);
+        }
+
+        public void setProfileimage(String profileimage){
+            ImageView image = (CircleImageView) mView.findViewById(R.id.post_profile_image);
+            Picasso.get().load(profileimage).placeholder(R.drawable.profile).into(image);
+        }
+
+        public void setTime(String time){
+            TextView PostTime = (TextView) mView.findViewById(R.id.post_time);
+            PostTime.setText(time);
+        }
+
+        public void setDate(String date){
+            TextView PostDate = (TextView) mView.findViewById(R.id.post_date);
+            PostDate.setText(date);
+        }
+
+        public void setDescription(String description){
+            TextView PostDescription = (TextView) mView.findViewById(R.id.post_description);
+            PostDescription.setText(description);
+        }
+
+        public void setPostimage(String postimage){
+            ImageView PostImage = (ImageView) mView.findViewById(R.id.post_image);
+            Picasso.get().load(postimage).into(PostImage);
+        }
+
+
     }
 
     private void SendUserToPostActivity() {

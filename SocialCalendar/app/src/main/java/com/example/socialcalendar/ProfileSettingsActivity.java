@@ -62,7 +62,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         currentUserID = mAuth.getCurrentUser().getUid();
         settingsUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
-        UserProfileBackgroundImageRef = FirebaseStorage.getInstance().getReference().child("Profile Background Images");
+//        UserProfileBackgroundImageRef = FirebaseStorage.getInstance().getReference().child("Profile Background Images");
 
         userName = (EditText) findViewById(R.id.settings_username);
         userProfName = (EditText) findViewById(R.id.settings_full_name);
@@ -70,7 +70,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         userPhoneNumber = (EditText) findViewById(R.id.settings_phone_number);
         userDOB = (EditText) findViewById(R.id.settings_users_dob);
         userProfImage = (CircleImageView) findViewById(R.id.settings_profile_image);
-        userBackgroundImage = (ImageView) findViewById(R.id.settings_profile_background);
+//        userBackgroundImage = (ImageView) findViewById(R.id.settings_profile_background);
         saveChangesSettingsButton = (Button) findViewById(R.id.update_account_settings_button);
         Logout = findViewById(R.id.log_out_link);
 
@@ -84,15 +84,15 @@ public class ProfileSettingsActivity extends AppCompatActivity {
             }
         });
 
-        userBackgroundImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryBackgroundIntent = new Intent();
-                galleryBackgroundIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryBackgroundIntent.setType("image/*");
-                startActivityForResult(galleryBackgroundIntent, Gallery_Pick_2);
-            }
-        });
+//        userBackgroundImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent galleryBackgroundIntent = new Intent();
+//                galleryBackgroundIntent.setAction(Intent.ACTION_GET_CONTENT);
+//                galleryBackgroundIntent.setType("image/*");
+//                startActivityForResult(galleryBackgroundIntent, Gallery_Pick_2);
+//            }
+//        });
 
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     String myProfileImage = dataSnapshot.child("profileimage").getValue().toString();
-                    String myProfileBackground = dataSnapshot.child("profilebackgroundimage").getValue().toString();
+//                    String myProfileBackground = dataSnapshot.child("profilebackgroundimage").getValue().toString();
                     String myUserName = dataSnapshot.child("username").getValue().toString();
                     String myProfileName = dataSnapshot.child("fullname").getValue().toString();
                     String myProfileStatus = dataSnapshot.child("status").getValue().toString();
@@ -115,7 +115,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                     String myUserDOB = dataSnapshot.child("dob").getValue().toString();
 
                     Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfImage);
-                    Picasso.get().load(myProfileBackground).placeholder(R.drawable.background).into(userBackgroundImage);
+//                    Picasso.get().load(myProfileBackground).placeholder(R.drawable.background).into(userBackgroundImage);
                     userName.setText(myUserName);
                     userProfName.setText(myProfileName);
                     userStatus.setText(myProfileStatus);
@@ -188,51 +188,51 @@ public class ProfileSettingsActivity extends AppCompatActivity {
             }
         }
 
-        if (requestCode == Gallery_Pick_2 && requestCode == RESULT_OK && data != null){
-            Uri BackgroundUri = data.getData();
-
-            CropImage.activity(BackgroundUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(this);
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            CropImage.ActivityResult Backgroundresult = CropImage.getActivityResult(data);
-
-
-            if (resultCode == RESULT_OK){
-                Uri resultUriBackground = Backgroundresult.getUri();
-
-                final StorageReference filePathBackground = UserProfileBackgroundImageRef.child(currentUserID + ".jpg");
-
-                filePathBackground.putFile(resultUriBackground).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        filePathBackground.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                final String downloadBackgroundUrl = uri.toString();
-                                settingsUserRef.child("profilebackgroundimage").setValue(downloadBackgroundUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Toast.makeText(ProfileSettingsActivity.this,"Image stored", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else{
-                                            String message = task.getException().getMessage();
-                                            Toast.makeText(ProfileSettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-            else{
-                Toast.makeText(ProfileSettingsActivity.this, "Error occurred: Image could not be cropped. Try again", Toast.LENGTH_SHORT);
-            }
-        }
+//        if (requestCode == Gallery_Pick_2 && requestCode == RESULT_OK && data != null){
+//            Uri BackgroundUri = data.getData();
+//
+//            CropImage.activity(BackgroundUri)
+//                    .setGuidelines(CropImageView.Guidelines.ON)
+//                    .start(this);
+//        }
+//
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+//            CropImage.ActivityResult Backgroundresult = CropImage.getActivityResult(data);
+//
+//
+//            if (resultCode == RESULT_OK){
+//                Uri resultUriBackground = Backgroundresult.getUri();
+//
+//                final StorageReference filePathBackground = UserProfileBackgroundImageRef.child(currentUserID + ".jpg");
+//
+//                filePathBackground.putFile(resultUriBackground).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        filePathBackground.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//                                final String downloadBackgroundUrl = uri.toString();
+//                                settingsUserRef.child("profilebackgroundimage").setValue(downloadBackgroundUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if(task.isSuccessful()){
+//                                            Toast.makeText(ProfileSettingsActivity.this,"Image stored", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                        else{
+//                                            String message = task.getException().getMessage();
+//                                            Toast.makeText(ProfileSettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//            else{
+//                Toast.makeText(ProfileSettingsActivity.this, "Error occurred: Image could not be cropped. Try again", Toast.LENGTH_SHORT);
+//            }
+//        }
     }
 
     private void ValidateAccountInfo() {

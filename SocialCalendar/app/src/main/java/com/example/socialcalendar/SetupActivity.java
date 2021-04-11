@@ -104,9 +104,8 @@ public class SetupActivity extends AppCompatActivity {
         if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null){
             ImageUri = data.getData();
 
-            CropImage.activity()
+            CropImage.activity(ImageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
                     .start(this);
         }
 

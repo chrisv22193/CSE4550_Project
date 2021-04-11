@@ -36,10 +36,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     //noinspection GradleCompatible
     implementation 'com.android.support:design: 26.+'
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
-    implementation 'com.google.firebase:firebase-database:19.2.1'
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
-    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+    implementation 'com.google.firebase:firebase-auth:11.0.0'
+    implementation 'com.google.firebase:firebase-database:11.0.2'
+    implementation 'com.google.firebase:firebase-storage:11.0.2'
+    implementation 'com.firebaseui:firebase-ui-database:2.1.1'
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-database-ktx'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'

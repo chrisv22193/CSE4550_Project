@@ -15,20 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/settings_profile_background"
-                android:layout_width="wrap_content"
-                android:layout_height="130dp"
-                android:scaleType="centerCrop"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/background" />
+<!--            <ImageView-->
+<!--                android:id="@+id/settings_profile_background"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="130dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:src="@drawable/background" />-->
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/settings_profile_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="300dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/profile" />
 
             <TextView
@@ -46,7 +47,7 @@
                 android:id="@+id/settings_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_profile_background"
+                android:layout_below="@+id/settings_profile_image"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="40dp"
