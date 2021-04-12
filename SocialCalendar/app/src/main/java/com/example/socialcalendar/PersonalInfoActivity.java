@@ -80,6 +80,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
     }
 
+    private void SendUserToSecondFragment() {
+        Intent secondFragmentIntent = new Intent(PersonalInfoActivity.this, SecondFragment.class);
+        secondFragmentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(secondFragmentIntent);
+        finish();
+    }
+
     private void ValidateAccountInfo() {
         String phonenumber = userPhoneNumber.getText().toString();
         String birthdate = userDOB.getText().toString();

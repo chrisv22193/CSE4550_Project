@@ -51,6 +51,7 @@ public class PostActivity extends AppCompatActivity {
 
     private String saveCurrentDate, saveCurrentTime, postRandomName, currentUserID;
     private ProgressDialog loadingBar;
+    private long countPost = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +139,23 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void SavingPostInformationToDatabase(Uri downloadUrl) {
+        PostRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    countPost = dataSnapshot.getChildrenCount();
+                }
+                else{
+                    countPost = 0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         usersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -153,6 +171,7 @@ public class PostActivity extends AppCompatActivity {
                     postMap.put("postimage", downloadUrl.toString());
                     postMap.put("profileimage", userProfileImage);
                     postMap.put("username", username);
+                    postMap.put("counter", countPost);
 
                     loadingBar.setTitle("Uploading new post");
                     loadingBar.setMessage("Please wait, while we create your new post");
