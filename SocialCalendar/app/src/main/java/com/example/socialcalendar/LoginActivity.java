@@ -101,8 +101,9 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "You are logged in successfully", Toast.LENGTH_SHORT).show();
                             }
                             else{
+                                SendUserBackToLoginActivity();
                                 String message = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this, "Error occurred" + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                             }
                             loadingBar.dismiss();
                         }
@@ -114,6 +115,13 @@ public class LoginActivity extends AppCompatActivity {
         Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
+        finish();
+    }
+
+    private void SendUserBackToLoginActivity(){
+        Intent loginIntent = new Intent(LoginActivity.this, LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginIntent);
         finish();
     }
 

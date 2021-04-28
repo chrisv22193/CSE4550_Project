@@ -39,4 +39,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Button
+        android:id="@+id/reset_password_in_settings_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button3"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:paddingStart="15dp"
+        android:text="Reset Password"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/personal_info_button"
+        tools:layout_editor_absoluteX="0dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

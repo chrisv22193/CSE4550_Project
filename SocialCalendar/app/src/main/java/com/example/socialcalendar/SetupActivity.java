@@ -156,13 +156,13 @@ public class SetupActivity extends AppCompatActivity {
         if(ImageUri == null){
             Toast.makeText(this,"Please select a profile image", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(username)){
+        else if(TextUtils.isEmpty(username)){
             Toast.makeText(this,"Please provide your username", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(fullname)){
+        else if(TextUtils.isEmpty(fullname)){
             Toast.makeText(this,"Please provide your full name", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(phonenumber)){
+        else if(TextUtils.isEmpty(phonenumber)){
             Toast.makeText(this,"Please provide your phone number", Toast.LENGTH_SHORT).show();
         }
         else{

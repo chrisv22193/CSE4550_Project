@@ -50,6 +50,7 @@ public class PostActivity extends AppCompatActivity {
     private String Description;
 
     private String saveCurrentDate, saveCurrentTime, postRandomName, currentUserID;
+    private long countPost = 0;
     private ProgressDialog loadingBar;
 
     @Override
@@ -109,6 +110,7 @@ public class PostActivity extends AppCompatActivity {
         SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd, yyyy");
         saveCurrentDate = currentDate.format(calForDate.getTime());
 
+
         Calendar calForTime = Calendar.getInstance();
         SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
         saveCurrentTime = currentTime.format(calForTime.getTime());
@@ -138,6 +140,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void SavingPostInformationToDatabase(Uri downloadUrl) {
+
         usersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -153,6 +156,7 @@ public class PostActivity extends AppCompatActivity {
                     postMap.put("postimage", downloadUrl.toString());
                     postMap.put("profileimage", userProfileImage);
                     postMap.put("username", username);
+                    postMap.put("timestamp", getCurrrentTimeStamp());
 
                     loadingBar.setTitle("Uploading new post");
                     loadingBar.setMessage("Please wait, while we create your new post");
@@ -179,6 +183,11 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private long getCurrrentTimeStamp(){
+        Long timestamp = System.currentTimeMillis()/1000;
+        return timestamp;
     }
 
     private void SendUserToMainActivity() {

@@ -21,6 +21,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -111,13 +112,15 @@ public class FirstFragment extends Fragment {
     }
 
     private void DisplayAllUsersPost() {
+        Query SortPostInDescendingOrder = PostRef.orderByChild("timestamp");
+
         FirebaseRecyclerAdapter<Posts, PostViewHolder> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Posts, PostViewHolder>
                         (
                                 Posts.class,
                                 R.layout.all_post_layout,
                                 PostViewHolder.class,
-                                PostRef
+                                SortPostInDescendingOrder
                         ) {
                     @Override
                     protected void populateViewHolder(PostViewHolder postViewHolder, Posts posts, int i) {

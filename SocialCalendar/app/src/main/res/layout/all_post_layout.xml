@@ -36,7 +36,7 @@
 
                 <TextView
                     android:id="@+id/post_user_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:text="Username"
                     android:layout_marginLeft="5dp"
