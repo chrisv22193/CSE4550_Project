@@ -9,10 +9,11 @@
         android:id="@+id/secondFragment"
         android:icon="@drawable/ic_person"
         android:title="Profile" />
-    <item
-        android:id="@+id/postActivity"
-        android:icon="@drawable/ic_post"
-        android:title="Post" />
+
+<!--    <item-->
+<!--        android:id="@+id/postActivity"-->
+<!--        android:icon="@drawable/ic_post"-->
+<!--        android:title="Post" />-->
     <item
         android:id="@+id/fourthFragment"
         android:icon="@drawable/ic_people"

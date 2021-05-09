@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="This event is on "
+                        android:text="This event is on"
                         android:textColor="@color/white"
                         android:textSize="15sp"/>
                     <TextView
@@ -66,7 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text=" Date"
+                        android:text="Date"
                         android:textColor="@color/white"
                         android:textSize="15sp"/>
                     <TextView
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text=" at "
+                        android:text="at"
                         android:textColor="@color/white"
                         android:textSize="15sp"/>
                     <TextView
@@ -98,10 +98,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Post description..."
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:padding="3dp"
-            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:padding="5dp"
+            android:textSize="15sp"
             android:textColor="@color/white"/>
 
     </LinearLayout>

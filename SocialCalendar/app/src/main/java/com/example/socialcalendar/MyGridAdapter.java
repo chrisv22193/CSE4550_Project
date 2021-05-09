@@ -42,8 +42,10 @@ public class MyGridAdapter extends ArrayAdapter {
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.setTime(monthDate);
         int DayNo = dateCalendar.get(Calendar.DAY_OF_MONTH);
+        int displayDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
         int displayMonth = dateCalendar.get(Calendar.MONTH)+1;
         int displayYear = dateCalendar.get(Calendar.YEAR);
+        int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
         int currentMonth = currentDate.get(Calendar.MONTH)+1;
         int currentYear = currentDate.get(Calendar.YEAR);
 
@@ -51,8 +53,11 @@ public class MyGridAdapter extends ArrayAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.single_cell_layout, parent, false);
         }
+        if(currentDay == displayDay && currentMonth == (displayMonth - 12) && currentYear == displayYear){
+            view.setBackgroundColor(Color.parseColor("#0288D1"));
+        }
 
-        if(displayMonth == currentMonth && displayYear == currentYear) {
+        else if(displayMonth == currentMonth && displayYear == currentYear) {
             view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
         }
         else{
