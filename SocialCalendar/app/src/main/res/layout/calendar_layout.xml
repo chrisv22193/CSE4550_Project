@@ -16,7 +16,7 @@
             android:layout_height="40dp"
             android:id="@+id/previousBtn"
             android:background="@mipmap/previous"
-            android:layout_margin="10dp"/>
+            android:layout_marginLeft="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,14 +25,15 @@
             android:text="CurrentDate"
             android:id="@+id/current_Date"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_weight="3"/>
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/nextBtn"
             android:background="@mipmap/next"
-            android:layout_margin="10dp"/>
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +44,7 @@
         android:paddingBottom="4dp"
         android:background="@android:color/darker_gray">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Sun"
@@ -53,7 +54,7 @@
             android:layout_weight="1"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Mon"
@@ -63,7 +64,7 @@
             android:layout_weight="1"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Tues"
@@ -73,7 +74,7 @@
             android:layout_weight="1"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Wed"
@@ -83,7 +84,7 @@
             android:layout_weight="1"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Thur"
@@ -93,7 +94,7 @@
             android:layout_weight="1"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Fri"
@@ -103,7 +104,7 @@
             android:layout_weight="1"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Sat"

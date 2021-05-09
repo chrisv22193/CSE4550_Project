@@ -55,7 +55,7 @@ public class MyGridAdapter extends ArrayAdapter {
         if(displayMonth == currentMonth && displayYear == currentYear) {
             view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
         }
-        else {
+        else{
             view.setBackgroundColor(Color.parseColor("#cccccc"));
         }
 
@@ -65,10 +65,10 @@ public class MyGridAdapter extends ArrayAdapter {
         Calendar eventCalendar = Calendar.getInstance();
         ArrayList<String> arrayList = new ArrayList<>();
         for(int i = 0; i<events.size(); i++) {
-            eventCalendar.setTime(ConvertStringToDate(events.get(i).getDATE()));
+            eventCalendar.setTime(ConvertStringToDate(events.get(i).getDate()));
             if(DayNo == eventCalendar.get(Calendar.DAY_OF_MONTH) && displayMonth == eventCalendar.get(Calendar.MONTH)+1
                     && displayYear == eventCalendar.get(Calendar.YEAR)) {
-                arrayList.add(events.get(i).getEVENT());
+                arrayList.add(events.get(i).getEvent());
                 EventNumber.setText(arrayList.size()+" Events");
             }
         }
@@ -76,7 +76,7 @@ public class MyGridAdapter extends ArrayAdapter {
     }
 
     private Date ConvertStringToDate(String eventDate) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
         Date date = null;
         try {
             date = format.parse(eventDate);

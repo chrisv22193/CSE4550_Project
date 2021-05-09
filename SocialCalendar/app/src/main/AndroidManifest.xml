@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialCalendar">
-        <activity android:name=".ResetPasswordInSettingsActivity"></activity>
+        <activity android:name=".FindFriendsActivity"></activity>
+        <activity android:name=".ResetPasswordInSettingsActivity" />
         <activity android:name=".PersonalInfoActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".ProfileSettingsActivity" />
@@ -34,8 +35,7 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
         <activity
             android:name=".Register_Activity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

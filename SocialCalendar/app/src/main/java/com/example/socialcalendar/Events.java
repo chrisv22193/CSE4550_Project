@@ -1,54 +1,84 @@
 package com.example.socialcalendar;
 
 public class Events {
-    String EVENT,TIME,DATE,MONTH,YEAR;
+    public String uid, profileimage, username, event, time, date, month, year;
 
-    public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR) {
-        this.EVENT = EVENT;
-        this.TIME = TIME;
-        this.DATE = DATE;
-        this.MONTH = MONTH;
-        this.YEAR = YEAR;
+    public Events(){
+
     }
 
-    public String getEVENT() {
-        return EVENT;
+    public Events(String uid, String profileimage, String username, String event, String time, String date, String month, String year) {
+        this.uid = uid;
+        this.profileimage = profileimage;
+        this.username = username;
+        this.event = event;
+        this.time = time;
+        this.date = date;
+        this.month = month;
+        this.year = year;
+    }
+    public String getUid() {
+        return uid;
     }
 
-    public void setEVENT(String EVENT) {
-        this.EVENT = EVENT;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getTIME() {
-        return TIME;
+    public String getProfileimage() {
+        return profileimage;
     }
 
-    public void setTIME(String TIME) {
-        this.TIME = TIME;
+    public void setProfileimage(String profileimage) {
+        this.profileimage = profileimage;
     }
 
-    public String getDATE() {
-        return DATE;
+    public String getUsername() {
+        return username;
     }
 
-    public void setDATE(String DATE) {
-        this.DATE = DATE;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getMONTH() {
-        return MONTH;
+    public String getEvent() {
+        return event;
     }
 
-    public void setMONTH(String MONTH) {
-        this.MONTH = MONTH;
+    public void setEvent(String event) {
+        this.event = event;
     }
 
-    public String getYEAR() {
-        return YEAR;
+    public String getTime() {
+        return time;
     }
 
-    public void setYEAR(String YEAR) {
-        this.YEAR = YEAR;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 }
 

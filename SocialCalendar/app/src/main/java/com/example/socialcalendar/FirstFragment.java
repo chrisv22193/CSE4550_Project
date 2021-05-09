@@ -72,9 +72,10 @@ public class FirstFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    private CustomCalendar customCalendar;
     private RecyclerView postList;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef, PostRef;
+    private DatabaseReference UsersRef, PostRef, CalendarPostRef;
     private ImageView addNewPostButton;
 
     String currentUserID;
@@ -85,10 +86,14 @@ public class FirstFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_first, container, false);
 
+        customCalendar = (CustomCalendar) v.findViewById(R.id.custom_calendar);
+
+
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        PostRef = FirebaseDatabase.getInstance().getReference().child("Post");
+        CalendarPostRef = FirebaseDatabase.getInstance().getReference().child("CalendarPost");
+//        PostRef = FirebaseDatabase.getInstance().getReference().child("Post");
 
 //        addNewPostButton = (ImageView) v.findViewById(R.id.add_new_post_button);
 
@@ -112,24 +117,23 @@ public class FirstFragment extends Fragment {
     }
 
     private void DisplayAllUsersPost() {
-        Query SortPostInDescendingOrder = PostRef.orderByChild("timestamp");
+        Query SortPostInDescendingOrder = CalendarPostRef.orderByChild("timestamp");
 
-        FirebaseRecyclerAdapter<Posts, PostViewHolder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<Posts, PostViewHolder>
+        FirebaseRecyclerAdapter<Events, PostViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Events, PostViewHolder>
                         (
-                                Posts.class,
-                                R.layout.all_post_layout,
+                                Events.class,
+                                R.layout.all_calendar_post_layout,
                                 PostViewHolder.class,
                                 SortPostInDescendingOrder
                         ) {
                     @Override
-                    protected void populateViewHolder(PostViewHolder postViewHolder, Posts posts, int i) {
-                        postViewHolder.setUsername(posts.getUsername());
+                    protected void populateViewHolder(PostViewHolder postViewHolder, Events posts, int i) {
+                        postViewHolder.setEvent(posts.getEvent());
                         postViewHolder.setTime(posts.getTime());
                         postViewHolder.setDate(posts.getDate());
-                        postViewHolder.setDescription(posts.getDescription());
+                        postViewHolder.setUsername(posts.getUsername());
                         postViewHolder.setProfileimage(posts.getProfileimage());
-                        postViewHolder.setPostimage(posts.getPostimage());
                     }
                 };
         firebaseRecyclerAdapter.startListening();
@@ -145,36 +149,29 @@ public class FirstFragment extends Fragment {
         }
 
         public void setUsername(String username){
-            TextView Username = (TextView) mView.findViewById(R.id.post_user_name);
+            TextView Username = (TextView) mView.findViewById(R.id.calendar_post_user_name);
             Username.setText(username);
         }
 
         public void setProfileimage(String profileimage){
-            ImageView image = (CircleImageView) mView.findViewById(R.id.post_profile_image);
+            ImageView image = (CircleImageView) mView.findViewById(R.id.calendar_post_profile_image);
             Picasso.get().load(profileimage).placeholder(R.drawable.profile).into(image);
         }
 
         public void setTime(String time){
-            TextView PostTime = (TextView) mView.findViewById(R.id.post_time);
+            TextView PostTime = (TextView) mView.findViewById(R.id.calendar_post_time);
             PostTime.setText(time);
         }
 
         public void setDate(String date){
-            TextView PostDate = (TextView) mView.findViewById(R.id.post_date);
+            TextView PostDate = (TextView) mView.findViewById(R.id.calendar_post_date);
             PostDate.setText(date);
         }
 
-        public void setDescription(String description){
-            TextView PostDescription = (TextView) mView.findViewById(R.id.post_description);
-            PostDescription.setText(description);
+        public void setEvent(String event){
+            TextView PostDescription = (TextView) mView.findViewById(R.id.calendar_post_description);
+            PostDescription.setText(event);
         }
-
-        public void setPostimage(String postimage){
-            ImageView PostImage = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.get().load(postimage).into(PostImage);
-        }
-
-
     }
 
     private void SendUserToPostActivity() {

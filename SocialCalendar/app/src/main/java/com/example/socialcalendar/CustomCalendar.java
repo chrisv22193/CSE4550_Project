@@ -1,8 +1,10 @@
 package com.example.socialcalendar;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,12 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -45,7 +53,7 @@ public class CustomCalendar extends LinearLayout {
     SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
     SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM",Locale.ENGLISH);
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy",Locale.ENGLISH);
-    SimpleDateFormat eventDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    SimpleDateFormat eventDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
 
     MyGridAdapter myGridAdapter;
     AlertDialog alertDialog;
@@ -53,6 +61,9 @@ public class CustomCalendar extends LinearLayout {
     ArrayList<Events> eventsList = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth;
+    DatabaseReference usersRef, CalendarPostRef;
+    String currentUserID, saveCurrentDate, saveCurrentTime, postRandomName;
 
     public CustomCalendar(Context context) {
         super(context);
@@ -82,6 +93,11 @@ public class CustomCalendar extends LinearLayout {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mAuth = FirebaseAuth.getInstance();
+                currentUserID = mAuth.getUid();
+                usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+                CalendarPostRef = FirebaseDatabase.getInstance().getReference().child("CalendarPost");
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
                 View addView = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_newevent_layout, null);
@@ -169,11 +185,64 @@ public class CustomCalendar extends LinearLayout {
     }
 
     private void SaveEvent(String event, String time, String date, String month, String year) {
-        Map<String, Object> Time = new HashMap<>();
-        Time.put("Time", time);
-        db.collection(date).document(event).set(Time);
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calForDate.getTime());
+
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        saveCurrentTime = currentTime.format(calForTime.getTime());
+
+        postRandomName = saveCurrentDate + saveCurrentTime;
+
+        usersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String username = dataSnapshot.child("username").getValue().toString();
+                    String userProfileImage = dataSnapshot.child("profileimage").getValue().toString();
+
+                    HashMap calendarPostMap = new HashMap();
+                    calendarPostMap.put("uid", currentUserID);
+                    calendarPostMap.put("postDate", saveCurrentDate);
+                    calendarPostMap.put("postTime", saveCurrentTime);
+                    calendarPostMap.put("date", date);
+                    calendarPostMap.put("time", time);
+                    calendarPostMap.put("event", event);
+                    calendarPostMap.put("profileimage", userProfileImage);
+                    calendarPostMap.put("username", username);
+                    calendarPostMap.put("timestamp", getCurrentTimeStamp());
+
+                    CalendarPostRef.child(currentUserID + postRandomName).setValue(calendarPostMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                SendUserToMainActivity();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+//        Map<String, Object> Time = new HashMap<>();
+//        Time.put("Time", time);
+//        db.collection(date).document(event).set(Time);
 
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    private void SendUserToMainActivity() {
+    }
+
+    private long getCurrentTimeStamp(){
+        Long timestamp = System.currentTimeMillis()/1000;
+        return timestamp;
     }
 
     private void InitializeLayout() {
