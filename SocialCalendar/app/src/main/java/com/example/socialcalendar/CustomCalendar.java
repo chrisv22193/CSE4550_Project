@@ -119,7 +119,7 @@ public class CustomCalendar extends LinearLayout {
                                 c.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 c.set(Calendar.MINUTE, minute);
                                 c.setTimeZone(TimeZone.getDefault());
-                                SimpleDateFormat hformate = new SimpleDateFormat("K:mm a", Locale.ENGLISH);
+                                SimpleDateFormat hformate = new SimpleDateFormat("hh:mm a", Locale.ENGLISH);
                                 String event_Time = hformate.format(c.getTime());
                                 EventTime.setText(event_Time);
                             }

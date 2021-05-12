@@ -13,7 +13,7 @@
         android:hint="Enter Event"
         android:id="@+id/eventname"
         android:textColorHint="@android:color/darker_gray"
-        android:inputType="textShortMessage"
+        android:inputType="textShortMessage|textCapSentences"
         android:layout_margin="20dp"
         android:gravity="center"/>
     <LinearLayout
