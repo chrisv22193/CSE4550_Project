@@ -1,5 +1,6 @@
 package com.example.socialcalendar;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -11,16 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -71,67 +80,95 @@ public class FourthFragment extends Fragment {
         }
     }
 
-    private ImageButton SearchButton;
-    private EditText SearchInputText;
-
-    private DatabaseReference UsersRef;
-
-    private RecyclerView SearchResultList;
+    private Button searchForFriendsButton;
+    private RecyclerView myFriendList;
+    private DatabaseReference FriendsRef, UsersRef;
+    private FirebaseAuth mAuth;
+    private String online_user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_fourth, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        online_user_id = mAuth.getCurrentUser().getUid();
+        FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends").child(online_user_id);
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        SearchResultList = (RecyclerView) v.findViewById(R.id.search_result_list);
-        SearchResultList.setHasFixedSize(true);
-        SearchResultList.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchForFriendsButton = (Button) v.findViewById(R.id.simpleTextID);
 
-        SearchButton = (ImageButton) v.findViewById(R.id.search_friends_button);
-        SearchInputText = (EditText) v.findViewById(R.id.search_box_input);
+        myFriendList = (RecyclerView) v.findViewById(R.id.friends_list);
+        myFriendList.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        myFriendList.setLayoutManager(linearLayoutManager);
 
-        SearchButton.setOnClickListener(new View.OnClickListener() {
+        searchForFriendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchBoxInput = SearchInputText.getText().toString();
-
-                SearchForFriends(searchBoxInput);
+                startActivity(new Intent(getActivity(), FindFriendsActivity.class));
             }
         });
 
+        DisplayAllFriends();
 
         return v;
     }
 
-    private void SearchForFriends(String searchBoxInput) {
-        Query searchFriendsQuery = UsersRef.orderByChild("fullname")
-                .startAt(searchBoxInput).endAt(searchBoxInput + "\uf8ff");
-
-        FirebaseRecyclerAdapter<FindFriends, FindFriendsViewHolder> firebaseRecyclerAdapter
-                = new FirebaseRecyclerAdapter<FindFriends, FindFriendsViewHolder>
+    private void DisplayAllFriends() {
+        FirebaseRecyclerAdapter<Friends, FriendsViewHolder> firebaseRecyclerAdapter
+                = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>
                 (
-                        FindFriends.class,
+                        Friends.class,
                         R.layout.all_users_display_layout,
-                        FindFriendsViewHolder.class,
-                        searchFriendsQuery
-                ) {
+                        FriendsViewHolder.class,
+                        FriendsRef
+                )
+        {
             @Override
-            protected void populateViewHolder(FindFriendsViewHolder findFriendsViewHolder, FindFriends findFriends, int i) {
-                findFriendsViewHolder.setFullname(findFriends.getFullname());
-                findFriendsViewHolder.setProfileimage(findFriends.getProfileimage());
-                findFriendsViewHolder.setStatus(findFriends.getStatus());
+            protected void populateViewHolder(FriendsViewHolder friendsViewHolder, Friends friends, int i) {
+                friendsViewHolder.setDate(friends.getDate());
+
+                final String usersIDs = getRef(i).getKey();
+
+                UsersRef.child(usersIDs).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            final String userName = dataSnapshot.child("fullname").getValue().toString();
+                            final String profileImage = dataSnapshot.child("profileimage").getValue().toString();
+
+                            friendsViewHolder.setFullname(userName);
+                            friendsViewHolder.setProfileimage(profileImage);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                friendsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String visit_user_id = getRef(i).getKey();
+
+                        Intent profileIntent = new Intent(getActivity(), PersonsProfileActivity.class);
+                        profileIntent.putExtra("visit_user_id", visit_user_id);
+                        startActivity(profileIntent);
+                    }
+                });
             }
         };
-        SearchResultList.setAdapter(firebaseRecyclerAdapter);
-
+        myFriendList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class FindFriendsViewHolder extends RecyclerView.ViewHolder{
+    public static class FriendsViewHolder extends RecyclerView.ViewHolder{
         View mView;
-
-        public FindFriendsViewHolder(@NonNull View itemView) {
+        public FriendsViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             mView = itemView;
@@ -147,9 +184,9 @@ public class FourthFragment extends Fragment {
             myName.setText(fullname);
         }
 
-        public void setStatus(String status){
-            TextView myStatus = (TextView) mView.findViewById(R.id.all_users_profile_bio);
-            myStatus.setText(status);
+        public void setDate(String date){
+            TextView friendsDate = (TextView) mView.findViewById(R.id.all_users_profile_bio);
+            friendsDate.setText("Friends since: " + date);
         }
     }
 }

@@ -19,10 +19,15 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,10 +80,10 @@ public class FirstFragment extends Fragment {
     private CustomCalendar customCalendar;
     private RecyclerView postList;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef, PostRef, CalendarPostRef;
+    private DatabaseReference FriendsRef, CalendarPostRef;
     private ImageView addNewPostButton;
 
-    String currentUserID;
+    String online_user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,8 +95,8 @@ public class FirstFragment extends Fragment {
 
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        online_user_id = mAuth.getCurrentUser().getUid();
+        FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends").child(online_user_id);
         CalendarPostRef = FirebaseDatabase.getInstance().getReference().child("CalendarPost");
 //        PostRef = FirebaseDatabase.getInstance().getReference().child("Post");
 
@@ -117,7 +122,7 @@ public class FirstFragment extends Fragment {
     }
 
     private void DisplayAllUsersPost() {
-        Query SortPostInDescendingOrder = CalendarPostRef.orderByChild("timestamp");
+        Query SortByDescendingOrder = CalendarPostRef.orderByChild("timestamp");
 
         FirebaseRecyclerAdapter<Events, PostViewHolder> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Events, PostViewHolder>
@@ -125,15 +130,34 @@ public class FirstFragment extends Fragment {
                                 Events.class,
                                 R.layout.all_calendar_post_layout,
                                 PostViewHolder.class,
-                                SortPostInDescendingOrder
+                                SortByDescendingOrder
                         ) {
                     @Override
                     protected void populateViewHolder(PostViewHolder postViewHolder, Events posts, int i) {
-                        postViewHolder.setEvent(posts.getEvent());
-                        postViewHolder.setTime(posts.getTime());
-                        postViewHolder.setDate(posts.getDate());
-                        postViewHolder.setUsername(posts.getUsername());
-                        postViewHolder.setProfileimage(posts.getProfileimage());
+                        final String usersIDs = getRef(i).getKey();
+                        CalendarPostRef.child(usersIDs).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    final String date = dataSnapshot.child("date").getValue().toString();
+                                    final String event = dataSnapshot.child("event").getValue().toString();
+                                    final String profileimage = dataSnapshot.child("profileimage").getValue().toString();
+                                    final String time = dataSnapshot.child("time").getValue().toString();
+                                    final String username = dataSnapshot.child("username").getValue().toString();
+
+                                    postViewHolder.setDate(date);
+                                    postViewHolder.setEvent(event);
+                                    postViewHolder.setProfileimage(profileimage);
+                                    postViewHolder.setTime(time);
+                                    postViewHolder.setUsername(username);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 };
         firebaseRecyclerAdapter.startListening();

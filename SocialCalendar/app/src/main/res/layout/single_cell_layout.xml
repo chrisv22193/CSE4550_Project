@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendar_day"
         android:text="1"
+        android:textColor="@color/grey_1000"
         android:textStyle="bold"
         android:layout_gravity="center"
         android:textSize="20sp"/>

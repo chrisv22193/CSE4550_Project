@@ -56,7 +56,8 @@
                 android:hint="Enter short bio"
                 android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
+                android:textColorHint="@color/white"
+                android:inputType="text|textCapSentences|textMultiLine"/>
 
             <TextView
                 android:id="@+id/usernameLabel"
@@ -106,7 +107,8 @@
                 android:hint="First and last name"
                 android:padding="10dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
+                android:textColorHint="@color/white"
+                android:inputType="text|textCapWords"/>
 
             <Button
                 android:id="@+id/update_account_settings_button"

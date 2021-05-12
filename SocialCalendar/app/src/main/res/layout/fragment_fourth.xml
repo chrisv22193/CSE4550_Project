@@ -13,47 +13,39 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
 
-        <TextView
+        <Button
             android:id="@+id/simpleTextID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
             android:text="Search for friends "
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/search_box_input"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:hint="Search "
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:background="@drawable/button2"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:layout_below="@id/simpleTextID"/>
-        <ImageButton
-            android:id="@+id/search_friends_button"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/simpleTextID"
-            android:layout_toEndOf="@id/search_box_input"
+            android:textStyle="bold"
             android:background="@drawable/button3"
-            android:src="@drawable/ic_search"/>
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:paddingStart="15dp"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/all_friends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/simpleTextID"
+            android:text="Friends Lists"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_result_list"
+            android:id="@+id/friends_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/search_box_input"
-            android:layout_margin="10dp">
-        </androidx.recyclerview.widget.RecyclerView>
-
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/all_friends"
+            android:layout_margin="15dp"/>
 
     </RelativeLayout>
 

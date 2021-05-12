@@ -214,7 +214,7 @@ public class CustomCalendar extends LinearLayout {
                     calendarPostMap.put("username", username);
                     calendarPostMap.put("timestamp", getCurrentTimeStamp());
 
-                    CalendarPostRef.child(currentUserID + postRandomName).setValue(calendarPostMap).addOnCompleteListener(new OnCompleteListener() {
+                    CalendarPostRef.child(currentUserID + " " + postRandomName).setValue(calendarPostMap).addOnCompleteListener(new OnCompleteListener() {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
