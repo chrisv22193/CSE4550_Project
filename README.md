@@ -1,7 +1,7 @@
 # Social-Calendar
 Group project for CSE 4550 Software Engineering course at CSUSB. The main purpose of this android application was to get students to form study groups. Students would post a day, time and place of what they are going to. 
 
-This app was created in andriod studio using Java as the main language
+This app was created in andriod studio using Java as the main language.
 Firebase was the main database which was used for the authentication of the user as well as storing the uses's information, profile pictures and post data.
 
 Login page
