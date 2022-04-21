@@ -1,6 +1,7 @@
 package com.example.socialcalendar;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -186,6 +188,7 @@ public class SecondFragment extends Fragment {
                                         @Override
                                         public void onClick(View v) {
                                             CharSequence options[] = new CharSequence[]{
+                                                    "Edit post",
                                                     "Delete event"
                                             };
                                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -195,10 +198,35 @@ public class SecondFragment extends Fragment {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     if(which == 0){
-                                                        CalendarPostRef.child(usersIDs).removeValue();
+                                                        // this is for the ability to edit the post
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                        builder.setTitle("Edit post:");
+
+                                                        final EditText inputField = new EditText(getActivity());
+                                                        inputField.setText(event);
+                                                        builder.setView(inputField);
+
+                                                        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                CalendarPostRef.child(usersIDs).child("event").setValue(inputField.getText().toString());
+                                                                Toast.makeText(getActivity(), "Post updated successfully", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+
+                                                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.cancel();
+                                                            }
+                                                        });
+
+                                                        Dialog dialog2 = builder.create();
+                                                        dialog2.show();
                                                     }
                                                     if(which == 1){
-
+                                                        // this is for the deletion of the post
+                                                        CalendarPostRef.child(usersIDs).removeValue();
                                                     }
                                                 }
                                             });
@@ -218,11 +246,6 @@ public class SecondFragment extends Fragment {
         firebaseRecyclerAdapter.startListening();
         postList.setAdapter(firebaseRecyclerAdapter);
     }
-
-    private void DeleteCurrentPost() {
-        CalendarPostRef.child(currentUserID).removeValue();
-    }
-
 
     public static class PostViewHolder extends RecyclerView.ViewHolder{
         View mView;
