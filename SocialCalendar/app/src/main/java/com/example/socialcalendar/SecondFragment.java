@@ -195,7 +195,7 @@ public class SecondFragment extends Fragment {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     if(which == 0){
-//                                                        DeleteCurrentPost();
+                                                        CalendarPostRef.child(usersIDs).removeValue();
                                                     }
                                                     if(which == 1){
 

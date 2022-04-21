@@ -54,6 +54,7 @@ public class PostActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
