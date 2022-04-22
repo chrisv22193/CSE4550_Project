@@ -3,10 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/drawable/button.xml" value="0.122" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/drawable/button2.xml" value="0.122" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/drawable/button3.xml" value="0.122" />
         <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/activity_find_friends.xml" value="0.15462962962962962" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/activity_front.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/activity_login.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/activity_personal_info.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/activity_profile_settings.xml" value="0.15462962962962962" />
         <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/add_newevent_layout.xml" value="0.15462962962962962" />
         <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/all_calendar_post_layout.xml" value="0.15462962962962962" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/calendar_layout.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/navigation_header.xml" value="0.20153985507246377" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/show_events_layout.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/show_events_rowlayout.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/layout/single_cell_layout.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/User/Documents/GitHub/CSE4550_Project/SocialCalendar/app/src/main/res/menu/navigation_menu.xml" value="0.18333333333333332" />
       </map>
     </option>
   </component>

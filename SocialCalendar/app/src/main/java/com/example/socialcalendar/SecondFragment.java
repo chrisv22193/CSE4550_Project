@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,7 +189,7 @@ public class SecondFragment extends Fragment {
                                         @Override
                                         public void onClick(View v) {
                                             CharSequence options[] = new CharSequence[]{
-                                                    "Edit post",
+                                                    "Edit event",
                                                     "Delete event"
                                             };
                                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -200,33 +201,51 @@ public class SecondFragment extends Fragment {
                                                     if(which == 0){
                                                         // this is for the ability to edit the post
                                                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                                        builder.setTitle("Edit post:");
+                                                        builder.setTitle("Edit event:");
 
                                                         final EditText inputField = new EditText(getActivity());
                                                         inputField.setText(event);
                                                         builder.setView(inputField);
 
-                                                        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                                        builder.setPositiveButton(Html.fromHtml("<font color='#004F93'>Update</font>"), new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
                                                                 CalendarPostRef.child(usersIDs).child("event").setValue(inputField.getText().toString());
-                                                                Toast.makeText(getActivity(), "Post updated successfully", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getActivity(), "Event updated successfully", Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
 
-                                                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                        builder.setNegativeButton(Html.fromHtml("<font color='#004F93'>Cancel</font>"), new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
                                                                 dialog.cancel();
                                                             }
                                                         });
 
-                                                        Dialog dialog2 = builder.create();
-                                                        dialog2.show();
+                                                        Dialog dialog1 = builder.create();
+                                                        dialog1.show();
                                                     }
                                                     if(which == 1){
                                                         // this is for the deletion of the post
-                                                        CalendarPostRef.child(usersIDs).removeValue();
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                        builder.setTitle("Are you sure you want to delete this event?");
+
+                                                        builder.setPositiveButton(Html.fromHtml("<font color='#004F93'>Delete</font>"), new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                CalendarPostRef.child(usersIDs).removeValue();
+                                                                Toast.makeText(getActivity(), "Event deleted", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+
+                                                        builder.setNegativeButton(Html.fromHtml("<font color='#004F93'>Cancel</font>"), new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.cancel();
+                                                            }
+                                                        });
+                                                        Dialog dialog2 = builder.create();
+                                                        dialog2.show();
                                                     }
                                                 }
                                             });

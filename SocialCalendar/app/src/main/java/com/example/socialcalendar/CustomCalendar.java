@@ -234,7 +234,7 @@ public class CustomCalendar extends LinearLayout {
 //        Time.put("Time", time);
 //        db.collection(date).document(event).set(Time);
 
-        Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Event created", Toast.LENGTH_SHORT).show();
     }
 
     private void SendUserToMainActivity() {
