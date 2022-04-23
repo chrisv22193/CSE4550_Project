@@ -2,15 +2,24 @@ package com.example.socialcalendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -32,11 +42,12 @@ public class PersonsProfileActivity extends AppCompatActivity {
     private TextView userName, userProfName, userBio;
     private CircleImageView userProfileImage;
     private Button SendFriendRequestButton, DeclineFriendRequestButton;
+    private RecyclerView postList;
 
-    private DatabaseReference FriendRequestRef, UsersRef, FriendsRef;
+    private DatabaseReference FriendRequestRef, UsersRef, FriendsRef, profileUserRef, CalendarPostRef;
     private FirebaseAuth mAuth;
 
-    private String senderUserID, receiverUserID, current_state, saveCurrentDate;
+    private String senderUserID, receiverUserID, current_state, saveCurrentDate, currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,18 @@ public class PersonsProfileActivity extends AppCompatActivity {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         FriendRequestRef = FirebaseDatabase.getInstance().getReference().child("FriendRequest");
         FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends");
+        currentUserID = mAuth.getCurrentUser().getUid();
+        profileUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        CalendarPostRef = FirebaseDatabase.getInstance().getReference().child("CalendarPost");
+
+
+        postList = (RecyclerView) findViewById(R.id.all_users_post_list);
+        postList.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        postList.setLayoutManager(linearLayoutManager);
+
 
 
         InitializeFields();
@@ -69,6 +92,7 @@ public class PersonsProfileActivity extends AppCompatActivity {
                     userBio.setText(myProfileStatus);
 
                     MaintenanceOfButtons();
+                    DisplayAllUsersPost();
                 }
             }
 
@@ -108,6 +132,50 @@ public class PersonsProfileActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void DisplayAllUsersPost() {
+        Query myPostList = CalendarPostRef.orderByChild("uid")
+                .startAt(receiverUserID).endAt(receiverUserID + "\uf8ff");
+
+        FirebaseRecyclerAdapter<Events, FirstFragment.PostViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Events, FirstFragment.PostViewHolder>
+                        (
+                                Events.class,
+                                R.layout.all_calendar_post_layout,
+                                FirstFragment.PostViewHolder.class,
+                                myPostList
+                        ) {
+                    @Override
+                    protected void populateViewHolder(FirstFragment.PostViewHolder postViewHolder, Events posts, int i) {
+                        final String usersIDs = getRef(i).getKey();
+                        CalendarPostRef.child(usersIDs).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    final String date = dataSnapshot.child("date").getValue().toString();
+                                    final String event = dataSnapshot.child("event").getValue().toString();
+                                    final String profileimage = dataSnapshot.child("profileimage").getValue().toString();
+                                    final String time = dataSnapshot.child("time").getValue().toString();
+                                    final String username = dataSnapshot.child("username").getValue().toString();
+
+                                    postViewHolder.setDate(date);
+                                    postViewHolder.setEvent(event);
+                                    postViewHolder.setProfileimage(profileimage);
+                                    postViewHolder.setTime(time);
+                                    postViewHolder.setUsername(username);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                };
+        firebaseRecyclerAdapter.startListening();
+        postList.setAdapter(firebaseRecyclerAdapter);
     }
 
     private void UnfriendExistingFriend() {

@@ -5,6 +5,35 @@
     android:layout_height="225dp"
     android:background="@android:color/black">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="50dp"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="Date Selected: "
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/eventdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Date"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -15,7 +44,8 @@
         android:textColorHint="@android:color/darker_gray"
         android:inputType="textShortMessage|textCapSentences"
         android:layout_margin="20dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

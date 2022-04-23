@@ -64,7 +64,7 @@
                 android:id="@+id/send_friend_request_button"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/persons_profile_bio"
                 android:background="@drawable/add_friend_button"
                 android:text="Send friend request"
@@ -81,6 +81,20 @@
                 android:text="Decline friend request"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"/>
+
+
+            <FrameLayout
+                android:id="@+id/main_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/all_users_post_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="400dp" />
+
+            </FrameLayout>
 
         </RelativeLayout>
 

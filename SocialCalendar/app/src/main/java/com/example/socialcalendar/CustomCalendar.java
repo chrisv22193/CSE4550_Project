@@ -103,6 +103,7 @@ public class CustomCalendar extends LinearLayout {
                 View addView = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_newevent_layout, null);
                 EditText EventName = addView.findViewById(R.id.eventname);
                 TextView EventTime = addView.findViewById(R.id.eventtime);
+                TextView EventDate = addView.findViewById(R.id.eventdate);
                 ImageButton SetTime = addView.findViewById(R.id.seteventtime);
                 Button AddEvent = addView.findViewById(R.id.addevent);
                 SetTime.setOnClickListener(new OnClickListener() {
@@ -130,6 +131,7 @@ public class CustomCalendar extends LinearLayout {
                 final String date = eventDateFormat.format(dates.get(position));
                 final String month = monthFormat.format(dates.get(position));
                 final String year = yearFormat.format(dates.get(position));
+                EventDate.setText(date);
 
                 AddEvent.setOnClickListener(new OnClickListener() {
                     @Override
